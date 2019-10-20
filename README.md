@@ -34,3 +34,9 @@ terminal window is evenly good (will not kill the notebook process).
 ```bash
 docker run --runtime=nvidia -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` --name 'bert-keras' -p xxxx:8888 -p yyyy:6006 -p zzzz:22 -v {bert-keras root folder}:/app {USERNAME}/bert-keras:latest
 ```
+
+#### Get notebook token
+
+```bash
+docker exec -it {name} bash -c "cat /var/log/supervisor/jupyter-notebook-stderr*" | grep token
+```
