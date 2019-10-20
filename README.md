@@ -40,3 +40,7 @@ docker run --runtime=nvidia -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id
 ```bash
 docker exec -it {name} bash -c "cat /var/log/supervisor/jupyter-notebook-stderr*" | grep token
 ```
+
+#### Password
+
+The user and root password in the container: `password123456`. Please change it after creating the container.
