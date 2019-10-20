@@ -1,6 +1,6 @@
 import tensorflow_hub as hub
 import tensorflow as tf
-from bert_keras.bert_layer import FullTokenizer
+from bert.tokenization import FullTokenizer
 import numpy as np
 from typing import List
 
