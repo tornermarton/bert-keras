@@ -1,0 +1,8 @@
+wget
+tmux
+sudo
+git
+vim
+htop
+openssh-server
+supervisor
