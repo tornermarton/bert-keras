@@ -44,13 +44,13 @@ class BertLayer(tf.keras.layers.Layer):
         self._trainable = n_layers_to_finetune != 0
         self._n_layers_to_finetune = n_layers_to_finetune
 
-        if type(pooling) is str and Bert.Pooling[pooling] in Bert.Pooling:
-            self._pooling = Bert.Pooling[pooling]
-        elif type(pooling) is Bert.Pooling and pooling in Bert.Pooling:
+        if type(pooling) is str and BertLayer.Pooling[pooling] in BertLayer.Pooling:
+            self._pooling = BertLayer.Pooling[pooling]
+        elif type(pooling) is BertLayer.Pooling and pooling in BertLayer.Pooling:
             self._pooling = pooling
         else:
             raise NameError(
-                "Unsupported pooling type {}! Please use one from Bert.Pooling.".format(pooling)
+                "Unsupported pooling type {}! Please use one from BertLayer.Pooling.".format(pooling)
             )
 
         self._bert_module = None
@@ -66,11 +66,11 @@ class BertLayer(tf.keras.layers.Layer):
 
         # Determine which layers to train (add them to trainable_vars)
         trainable_vars = self._bert_module.variables
-        if self._pooling == Bert.Pooling.FIRST:
+        if self._pooling == BertLayer.Pooling.FIRST:
             trainable_vars = [var for var in trainable_vars if "/cls/" not in var.name]
             trainable_layers = ["pooler/dense"]
 
-        elif self._pooling == Bert.Pooling.REDUCE_MEAN or self._pooling == Bert.Pooling.ENCODER_OUT:
+        elif self._pooling == BertLayer.Pooling.REDUCE_MEAN or self._pooling == BertLayer.Pooling.ENCODER_OUT:
             trainable_vars = [
                 var
                 for var in trainable_vars
@@ -79,7 +79,7 @@ class BertLayer(tf.keras.layers.Layer):
             trainable_layers = []
         else:
             raise NameError(
-                "Unsupported pooling type {}! Please use one from Bert.Pooling".format(self._pooling)
+                "Unsupported pooling type {}! Please use one from BertLayer.Pooling".format(self._pooling)
             )
 
         # Select how many layers to fine tune
@@ -121,11 +121,11 @@ class BertLayer(tf.keras.layers.Layer):
             input_ids=input_ids, input_mask=input_mask, segment_ids=segment_ids
         )
 
-        if self._pooling == Bert.Pooling.FIRST:
+        if self._pooling == BertLayer.Pooling.FIRST:
             pooled = self._bert_module(inputs=bert_inputs, signature="tokens", as_dict=True)[
                 "pooled_output"
             ]
-        elif self._pooling == Bert.Pooling.REDUCE_MEAN:
+        elif self._pooling == BertLayer.Pooling.REDUCE_MEAN:
             result = self._bert_module(inputs=bert_inputs, signature="tokens", as_dict=True)[
                 "sequence_output"
             ]
@@ -133,7 +133,7 @@ class BertLayer(tf.keras.layers.Layer):
             input_mask = tf.cast(x=input_mask, dtype=tf.float32)
             pooled = masked_reduce_mean(x=result, m=input_mask)
 
-        elif self._pooling == Bert.Pooling.ENCODER_OUT:
+        elif self._pooling == BertLayer.Pooling.ENCODER_OUT:
             result = self._bert_module(inputs=bert_inputs, signature="tokens", as_dict=True)[
                 "sequence_output"
             ]
@@ -142,7 +142,7 @@ class BertLayer(tf.keras.layers.Layer):
             pooled = mul_mask(x=result, m=input_mask)
         else:
             raise NameError(
-                "Unsupported pooling type {}! Please use one from Bert.Pooling".format(self._pooling)
+                "Unsupported pooling type {}! Please use one from BertLayer.Pooling".format(self._pooling)
             )
 
         return pooled
