@@ -7,7 +7,7 @@ from enum import Enum, auto
 class BertLayer(tf.keras.layers.Layer):
     """Custom keras layer integrating Bert from tf-hub.
 
-    Source: https://towardsdatascience.com/bert-in-keras-with-tensorflow-hub-76bcbc9417b
+    Source: https://towardsdatascience.com/bert_keras-in-keras-with-tensorflow-hub-76bcbc9417b
     Bert: https://arxiv.org/pdf/1810.04805.pdf
 
     Search for pretrained models: https://tfhub.dev/

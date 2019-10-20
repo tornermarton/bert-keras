@@ -2,7 +2,7 @@ import tensorflow as tf
 from typing import List
 import numpy as np
 
-from bert import BertPreprocessor, BertLayer, InputExample
+from bert_keras import BertPreprocessor, BertLayer, InputExample
 
 
 class BertEncoder(object):

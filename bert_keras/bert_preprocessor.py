@@ -1,17 +1,17 @@
 import tensorflow_hub as hub
 import tensorflow as tf
-from bert.bert_layer import FullTokenizer
+from bert_keras.bert_layer import FullTokenizer
 import numpy as np
 from typing import List
 
-from bert.preprocessor import Preprocessor
+from bert_keras.preprocessor import Preprocessor
 
 
 class InputExample(object):
     """
     A single training/test example for simple sequence classification.
 
-    Source: https://github.com/google-research/bert
+    Source: https://github.com/google-research/bert_keras
     """
 
     def __init__(self, text_a, text_b=None):
@@ -35,7 +35,7 @@ class BertPreprocessor(Preprocessor):
     This class can be used to do all the work to create the inputs (and outputs) of a Neural Network using BERT
     as embedding. Currently only single sequence classification is supported.
 
-    Source: https://github.com/google-research/bert
+    Source: https://github.com/google-research/bert_keras
     """
 
     def __init__(self,
