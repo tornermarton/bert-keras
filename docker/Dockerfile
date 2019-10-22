@@ -13,11 +13,6 @@ RUN apt-get update && pip install --upgrade pip
 RUN xargs apt-get install -y < requirements.system
 RUN pip install --trusted-host pypi.python.org -r ../requirements.txt
 
-# correct cufflinks imports (plotly.plotly deprecated)
-RUN sed -i -e 's/plotly\.plotly/chart_studio\.plotly/g' /usr/local/lib/python3.6/dist-packages/cufflinks/tools.py \
-    && sed -i -e 's/plotly\.plotly/chart_studio\.plotly/g' /usr/local/lib/python3.6/dist-packages/cufflinks/plotlytools.py \
-    && sed -i -e 's/plotly\.plotly/chart_studio\.plotly/g' /usr/local/lib/python3.6/dist-packages/cufflinks/__init__.py
-
 RUN mkdir /app
 
 # configure ssh server
